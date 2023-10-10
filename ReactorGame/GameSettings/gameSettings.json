@@ -1,8 +1,104 @@
 {
-  "cycleDuration": 120,
-  "breakTankOnOverflow": true,
+  "cycleDuration": 25,
+  "breakTankOnOverflow": false,
   "flowTemperatures": {},
-  "tanks": {},
-  "targetTemperature": 100,
-  "valves": {}
+  "tanks": {
+    "tank1": {
+      "capacity": 3,
+      "startLevel": 0
+    },
+    "tank2": {
+      "capacity": 1,
+      "startLevel": 0
+    },
+    "tank3": {
+      "capacity": 2,
+      "startLevel": 0
+    },
+    "tank4": {
+      "capacity": 1,
+      "startLevel": 0
+    }
+  },
+  "targetTemperature": 0,
+  "valves": {
+    "valve1": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.9,
+      "isBroken": true
+    },
+    "valve2": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 1.0,
+      "isBroken": false
+    },
+    "valve3": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.8,
+      "isBroken": false
+    },
+    "valve4": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 1.0,
+      "isBroken": true
+    },
+    "valve5": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 1.0,
+      "isBroken": false
+    },
+    "valve6": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.7,
+      "isBroken": false
+    },
+    "valve7": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.5,
+      "isBroken": false
+    },
+    "valve8": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.6,
+      "isBroken": true
+    },
+    "valve9": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 1.0,
+      "isBroken": false
+    },
+    "valve10": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.4,
+      "isBroken": true
+    },
+    "valve11": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 1.0,
+      "isBroken": false
+    },
+    "valve12": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 1.0,
+      "isBroken": false
+    },
+    "valve13": {
+      "maxFlowDisplay": 1,
+      "flowStepSize": 1,
+      "flowRatePerStep": 0.3,
+      "isBroken": true
+    }
+  }
 }

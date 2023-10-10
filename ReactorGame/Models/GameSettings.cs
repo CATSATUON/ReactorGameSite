@@ -12,7 +12,7 @@ namespace ReactorBuild.Pages
     {
         [JsonProperty("cycleDuration")]
         [Required(ErrorMessage = "Cycle duration is required")]
-        [Range(1, 1000, ErrorMessage = "Cycle duration must be positive")]
+        [Range(1, 1000, ErrorMessage = "Cycle duration must be 1 or greater")]
         public int CycleDuration { get; set; }
 
         [JsonProperty("breakTankOnOverflow")]
@@ -26,7 +26,7 @@ namespace ReactorBuild.Pages
 
         [JsonProperty("targetTemperature")]
         [Required(ErrorMessage = "Target temperature is required")]
-        [Range(1, 1000, ErrorMessage = "Target temperature must be positive")]
+        [Range(0, 1000, ErrorMessage = "Target temperature must be positive")]
         public int TargetTemperature { get; set; }
 
         [JsonProperty("valves")]
@@ -34,12 +34,12 @@ namespace ReactorBuild.Pages
 
         public GameSettings()
         {
-            this.CycleDuration = 120;
-            this.BreakTankOnOverflow = true;
-            this.FlowTemperatures = new Dictionary<int, int>();
-            this.Tanks = new Dictionary<string, TankSettings>();
-            this.TargetTemperature = 100;
-            this.Valves = new Dictionary<string, ValveSettings>();
+            CycleDuration = 120;
+            BreakTankOnOverflow = true;
+            FlowTemperatures = new Dictionary<int, int>();
+            Tanks = new Dictionary<string, TankSettings>();
+            TargetTemperature = 100;
+            Valves = new Dictionary<string, ValveSettings>();
         }
 
         public static GameSettings LoadSettings(string fname)
@@ -71,8 +71,13 @@ namespace ReactorBuild.Pages
     public class TankSettings
     {
         [JsonProperty("capacity")]
+        [Required(ErrorMessage = "Capacity is required")]
+        [Range(1, 20, ErrorMessage = "Capacity must be between 1 and 20")]
         public int Capacity { get; set; }
+
         [JsonProperty("startLevel")]
+        [Required(ErrorMessage = "Start level is required")]
+        [Range(0, 20, ErrorMessage = "Start level must be between 0 and 20")]
         public int StartLevel { get; set; }
     }
 
@@ -80,11 +85,20 @@ namespace ReactorBuild.Pages
     public class ValveSettings
     {
         [JsonProperty("maxFlowDisplay")]
+        [Required(ErrorMessage = "Max flow display is required")]
+        [Range(1, 20, ErrorMessage = "Max flow display must be between 1 and 20")]
         public int MaxFlowDisplay { get; set; }
+
         [JsonProperty("flowStepSize")]
+        [Required(ErrorMessage = "Flow step size is required")]
+        [Range(1, 20, ErrorMessage = "Flow step size must be between 1 and 20")]
         public int FlowStepSize { get; set; }
+
         [JsonProperty("flowRatePerStep")]
+        [Required(ErrorMessage = "Flow rate per step is required")]
+        [Range(0, 1, ErrorMessage = "Flow rate per step must be between 0 and 1")]
         public float FlowRatePerStep { get; set; }
+        
         [JsonProperty("isBroken")]
         public bool IsBroken { get; set; }
     }

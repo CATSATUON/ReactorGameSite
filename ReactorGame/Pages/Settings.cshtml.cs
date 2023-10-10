@@ -26,8 +26,7 @@ namespace ReactorGame.Pages
         public IActionResult OnGet()
         {
             // Load the settings from a file
-            Console.WriteLine("Loading settings from file");
-            GameSettings.LoadSettings(JsonFilePath);
+            GameSettings = GameSettings.LoadSettings(JsonFilePath);
 
             if (GameSettings == null)
             {
@@ -39,19 +38,26 @@ namespace ReactorGame.Pages
 
         public IActionResult OnPost()
         {
-            // Get form input
-            GameSettings = new GameSettings();
-            TryUpdateModelAsync(GameSettings);
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
-            Console.WriteLine("Model state is valid");
+            
             GameSettings.SaveSettings(JsonFilePath);
 
             return RedirectToPage("/Confirmation");
+        }
+
+        public IActionResult OnGetJson()
+        {
+            GameSettings = GameSettings.LoadSettings(JsonFilePath);
+
+            if (GameSettings == null)
+            {
+                GameSettings = new GameSettings();
+            }
+
+            return new JsonResult(GameSettings);
         }
     }
 }
