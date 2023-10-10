@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace ReactorBuild.Pages
+namespace ReactorGame.Models
 {
 
     [Serializable]
@@ -50,7 +50,6 @@ namespace ReactorBuild.Pages
                 return null;
             }
             string json = File.ReadAllText(fname);
-            Console.WriteLine("JSON: " + json);
             GameSettings? gameSettings = JsonConvert.DeserializeObject<GameSettings>(json);
             if (gameSettings == null)
             {

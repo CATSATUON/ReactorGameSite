@@ -12,6 +12,7 @@
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
+        <h2>General</h2>
         <div class="form-group row">
             <label for="cycleDuration" class="col-sm-4 col-form-label text-right">Cycle Duration (seconds):</label>
             <div class="col-sm-2">
@@ -38,18 +39,33 @@
         </div>
 
         <div class="form-group">
-            <label for="flowTemperatures">Flow Temperatures:</label>
-            @foreach (var temperature in Model.GameSettings.FlowTemperatures)
-            {
-                <div class="row">
-                    <div class="col-md-6">
-                        <input type="number" name="GameSettings.FlowTemperatures[@temperature.Key]" class="form-control" value="@temperature.Key" placeholder="Temperature (°C)" />
-                    </div>
-                    <div class="col-md-6">
-                        <input type="number" name="GameSettings.FlowTemperatures[@temperature.Value]" class="form-control" value="@temperature.Value" placeholder="Flow" />
-                    </div>
-                </div>
-            }
+            <h2>Temperature Per Flowrate</h2>
+            <table class="table table-bordered" id="flowTemperaturesTable">
+                <thead>
+                    <tr>
+                        <th>Flow</th>
+                        <th>Temperature (°C)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var temperature in Model.FlowTemperatures)
+                    {
+                        <tr>
+                            <td>
+                                <input type="number" min="0" max="1000" name="FlowTemperatures[@Model.FlowTemperatures.IndexOf(temperature)].Flow" class="form-control" value="@temperature.Flow" placeholder="Flow" />
+                            </td>
+                            <td>
+                                <input type="number" name="FlowTemperatures[@Model.FlowTemperatures.IndexOf(temperature)].Temperature" class="form-control" value="@temperature.Temperature" placeholder="Temperature (°C)" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow(this)">Remove</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" onclick="addRow()">Add Temperature</button>
         </div>
 
         <div class="form-group">
@@ -70,10 +86,10 @@
                                 Tank @(i)
                             </td>
                             <td>
-                                <input type="text" name='GameSettings.Tanks[tank@(i)].Capacity' class="form-control" value="@Model.GameSettings.Tanks["tank" + i].Capacity" placeholder="Capacity" />
+                                <input type="text" min="1" max="20" name='GameSettings.Tanks[tank@(i)].Capacity' class="form-control" value="@Model.GameSettings.Tanks["tank" + i].Capacity" placeholder="Capacity" />
                             </td>
                             <td>
-                                <input type="text" name='GameSettings.Tanks[tank@(i)].StartLevel' class="form-control" value="@Model.GameSettings.Tanks["tank" + i].StartLevel" placeholder="Start Level" />
+                                <input type="text" min="0" max="20" name='GameSettings.Tanks[tank@(i)].StartLevel' class="form-control" value="@Model.GameSettings.Tanks["tank" + i].StartLevel" placeholder="Start Level" />
                             </td>
                         </tr>
                     }
@@ -89,7 +105,7 @@
                         <th>Name</th>
                         <th>Max Flow Display</th>
                         <th>Flow Step Size</th>
-                        <th>Flow Rate Per Step</th>
+                        <th>Flow Rate Per Step (0 - 1)</th>
                         <th>Is Broken</th>
                     </tr>
                 </thead>
@@ -101,13 +117,13 @@
                                 Valve @(i)
                             </td>
                             <td>
-                                <input type="number" name='GameSettings.Valves[valve@(i)].MaxFlowDisplay' class="form-control" value="@Model.GameSettings.Valves["valve" + i].MaxFlowDisplay" placeholder="Max Flow Display" />
+                                <input type="number" min="1" max="20" name='GameSettings.Valves[valve@(i)].MaxFlowDisplay' class="form-control" value="@Model.GameSettings.Valves["valve" + i].MaxFlowDisplay" placeholder="Max Flow Display" />
                             </td>
                             <td>
-                                <input type="number" name='GameSettings.Valves[valve@(i)].FlowStepSize' class="form-control" value="@Model.GameSettings.Valves["valve" + i].FlowStepSize" placeholder="Flow Step Size" />
+                                <input type="number" min="1" max="20" name='GameSettings.Valves[valve@(i)].FlowStepSize' class="form-control" value="@Model.GameSettings.Valves["valve" + i].FlowStepSize" placeholder="Flow Step Size" />
                             </td>
                             <td>
-                                <input type="number" step="any" name='GameSettings.Valves[valve@(i)].FlowRatePerStep' class="form-control" value="@Model.GameSettings.Valves["valve" + i].FlowRatePerStep" placeholder="Flow Rate Per Step" />
+                                <input type="number" step="any" min="0" max="1" name='GameSettings.Valves[valve@(i)].FlowRatePerStep' class="form-control" value="@Model.GameSettings.Valves["valve" + i].FlowRatePerStep" placeholder="Flow Rate Per Step" />
                             </td>
                             <td>
                                 <div class="custom-control custom-checkbox">
@@ -123,7 +139,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-success">Save Settings</button>
         </div>
     </form>
 </div>
@@ -131,3 +147,40 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script>
+    function addRow() {
+        var table = document.getElementById("flowTemperaturesTable").getElementsByTagName('tbody')[0];
+        var newRow = table.insertRow(table.rows.length);
+
+        var flowCell = newRow.insertCell(0);
+        var flowInput = document.createElement("input");
+        flowInput.type = "number";
+        flowInput.name = "FlowTemperatures[" + (table.rows.length - 1) + "].Flow";
+        flowInput.className = "form-control";
+        flowInput.placeholder = "Flow";
+        flowCell.appendChild(flowInput);
+
+        var temperatureCell = newRow.insertCell(1);
+        var temperatureInput = document.createElement("input");
+        temperatureInput.type = "number";
+        temperatureInput.name = "FlowTemperatures[" + (table.rows.length - 1) + "].Temperature";
+        temperatureInput.className = "form-control";
+        temperatureInput.placeholder = "Temperature (°C)";
+        temperatureCell.appendChild(temperatureInput);
+
+        var actionCell = newRow.insertCell(2);
+        var removeButton = document.createElement("button");
+        removeButton.type = "button";
+        removeButton.className = "btn btn-danger";
+        removeButton.innerHTML = "Remove";
+        removeButton.onclick = function () { removeRow(this); };
+        actionCell.appendChild(removeButton);
+    }
+
+
+    function removeRow(button) {
+        var row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+</script>

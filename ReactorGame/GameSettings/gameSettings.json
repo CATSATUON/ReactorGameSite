@@ -1,7 +1,14 @@
 {
   "cycleDuration": 25,
   "breakTankOnOverflow": false,
-  "flowTemperatures": {},
+  "flowTemperatures": {
+    "0": 299,
+    "1": 250,
+    "2": 200,
+    "3": 160,
+    "4": 120,
+    "5": 100
+  },
   "tanks": {
     "tank1": {
       "capacity": 3,
@@ -20,13 +27,13 @@
       "startLevel": 0
     }
   },
-  "targetTemperature": 0,
+  "targetTemperature": 120,
   "valves": {
     "valve1": {
       "maxFlowDisplay": 1,
       "flowStepSize": 1,
       "flowRatePerStep": 0.9,
-      "isBroken": true
+      "isBroken": false
     },
     "valve2": {
       "maxFlowDisplay": 1,
@@ -68,7 +75,7 @@
       "maxFlowDisplay": 1,
       "flowStepSize": 1,
       "flowRatePerStep": 0.6,
-      "isBroken": true
+      "isBroken": false
     },
     "valve9": {
       "maxFlowDisplay": 1,
