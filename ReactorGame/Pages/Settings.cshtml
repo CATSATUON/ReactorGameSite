@@ -1,0 +1,76 @@
+﻿@page
+@model SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "_Layout";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" action="/Settings">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="cycleDuration">Cycle Duration (seconds)</label>
+        <input type="number" id="cycleDuration" name="GameSettings.CycleDuration" class="form-control" value="@Model.GameSettings.CycleDuration" />
+    </div>
+    @* <div class="form-group">
+        <label for="breakTankOnOverflow">Break Tank On Overflow</label>
+        <input type="checkbox" id="breakTankOnOverflow" name="GameSettings.BreakTankOnOverflow" class="form-control" @(Model.GameSettings.BreakTankOnOverflow ? "checked" : "") />
+    </div> *@
+    <div class="form-group">
+        <label>Flow Temperatures</label>
+        @foreach (var temperature in Model.GameSettings.FlowTemperatures)
+        {
+            <div class="row">
+                <div class="col">
+                    <input type="number" name="GameSettings.FlowTemperatures[@temperature.Key]" class="form-control" value="@temperature.Key" placeholder="Temperature (°C)" />
+                </div>
+                <div class="col">
+                    <input type="number" name="GameSettings.FlowTemperatures[@temperature.Value]" class="form-control" value="@temperature.Value" placeholder="Flow" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <label>Tanks</label>
+        @foreach (var tank in Model.GameSettings.Tanks)
+        {
+            <div class="row">
+                <div class="col">
+                    <input type="text" name="GameSettings.Tanks[@tank.Key].Capacity" class="form-control" value="@tank.Value.Capacity" placeholder="Capacity" />
+                </div>
+                <div class="col">
+                    <input type="text" name="GameSettings.Tanks[@tank.Key].StartLevel" class="form-control" value="@tank.Value.StartLevel" placeholder="Start Level" />
+                </div>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <label for="targetTemperature">Target Temperature (°C)</label>
+        <input type="number" id="targetTemperature" name="GameSettings.TargetTemperature" class="form-control" value="@Model.GameSettings.TargetTemperature" />
+    </div>
+    <div class="form-group">
+        <label>Valves</label>
+        @foreach (var valve in Model.GameSettings.Valves)
+        {
+            <div class="row">
+                <div class="col">
+                    <input type="number" name="GameSettings.Valves[@valve.Key].MaxFlowDisplay" class="form-control" value="@valve.Value.MaxFlowDisplay" placeholder="Max Flow Display" />
+                </div>
+                <div class="col">
+                    <input type="number" name="GameSettings.Valves[@valve.Key].FlowStepSize" class="form-control" value="@valve.Value.FlowStepSize" placeholder="Flow Step Size" />
+                </div>
+                <div class="col">
+                    <input type="number" name="GameSettings.Valves[@valve.Key].FlowRatePerStep" class="form-control" value="@valve.Value.FlowRatePerStep" placeholder="Flow Rate Per Step" />
+                </div>
+                <div class="col">
+                    <input type="checkbox" name="GameSettings.Valves[@valve.Key].IsBroken" class="form-control" @(valve.Value.IsBroken ? "checked" : "") />
+                </div>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

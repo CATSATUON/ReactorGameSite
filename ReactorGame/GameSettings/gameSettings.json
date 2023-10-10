@@ -1,0 +1,8 @@
+{
+  "cycleDuration": 120,
+  "breakTankOnOverflow": true,
+  "flowTemperatures": {},
+  "tanks": {},
+  "targetTemperature": 100,
+  "valves": {}
+}

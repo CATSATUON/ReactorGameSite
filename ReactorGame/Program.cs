@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using ReactorGame.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +30,38 @@ else
     app.UseHsts();
 }
 
+var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
+
+StaticFileOptions staticFileOptions = new StaticFileOptions
+{
+    FileProvider = fileProvider,
+    OnPrepareResponse = ctx =>
+    {
+        if (ctx.Context.Request.Path.StartsWithSegments("/_content"))
+        {
+            ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=31536000,immutable");
+        }
+        else if (ctx.File.Name.EndsWith(".br"))
+        {
+            ctx.Context.Response.Headers.Append("Content-Encoding", "br");
+            ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=31536000,immutable");
+            ctx.Context.Response.ContentType = "application/wasm";
+
+        }
+    }
+};
+
+FileExtensionContentTypeProvider contentTypeProvider = new FileExtensionContentTypeProvider();
+contentTypeProvider.Mappings[".br"] = "application/octet-stream";
+contentTypeProvider.Mappings[".wasm"] = "application/wasm";
+contentTypeProvider.Mappings[".data"] = "application/octet-stream";
+contentTypeProvider.Mappings[".js"] = "application/javascript";
+staticFileOptions.ContentTypeProvider = contentTypeProvider;
+
+
+app.UseStaticFiles(staticFileOptions);
+
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
 app.UseRouting();
 
