@@ -8,15 +8,15 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ReactorGame.Pages
 {
-    public class SettingsModel : PageModel
+    public class ScenarioModel : PageModel
     {
-        private readonly ILogger<SettingsModel> _logger;
+        private readonly ILogger<ScenarioModel> _logger;
         // Make the path not public
         private const string JsonFilePath = "GameSettings/gameSettings.json";
 
         [BindProperty]
         [AllowNull]
-        public GameSettings GameSettings { get; set; }
+        public GameScenario GameSettings { get; set; }
         [BindProperty]
         [AllowNull]
         [Required(ErrorMessage = "Flow temperatures are required")]
@@ -24,7 +24,7 @@ namespace ReactorGame.Pages
         public List<FlowTemperature> FlowTemperatures { get; set; }
 
 
-        public SettingsModel(ILogger<SettingsModel> logger)
+        public ScenarioModel(ILogger<ScenarioModel> logger)
         {
             _logger = logger;
         }
@@ -32,13 +32,13 @@ namespace ReactorGame.Pages
         public IActionResult OnGet()
         {
             // Load the settings from a file
-            GameSettings = GameSettings.LoadSettings(JsonFilePath);
+            GameSettings = GameScenario.LoadSettings(JsonFilePath);
             FlowTemperatures = GameSettings.FlowTemperatures.Select(
                 x => new FlowTemperature { Flow = x.Key, Temperature = x.Value }).ToList();
 
             if (GameSettings == null)
             {
-                GameSettings = new GameSettings();
+                GameSettings = new GameScenario();
             }
 
             return Page();
@@ -62,11 +62,11 @@ namespace ReactorGame.Pages
 
         public IActionResult OnGetJson()
         {
-            GameSettings = GameSettings.LoadSettings(JsonFilePath);
+            GameSettings = GameScenario.LoadSettings(JsonFilePath);
 
             if (GameSettings == null)
             {
-                GameSettings = new GameSettings();
+                GameSettings = new GameScenario();
             }
 
             return new JsonResult(GameSettings);

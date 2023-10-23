@@ -1,4 +1,5 @@
 {
+  "scenarioName": "normal_operation",
   "cycleDuration": 25,
   "breakTankOnOverflow": false,
   "flowTemperatures": {

@@ -8,8 +8,12 @@ namespace ReactorGame.Models
 {
 
     [Serializable]
-    public class GameSettings
+    public class GameScenario
     {
+        [JsonProperty("scenarioName")]
+        [Required(ErrorMessage = "Scenario name is required")]
+        public string ScenarioName { get; set; }
+
         [JsonProperty("cycleDuration")]
         [Required(ErrorMessage = "Cycle duration is required")]
         [Range(1, 1000, ErrorMessage = "Cycle duration must be 1 or greater")]
@@ -32,7 +36,7 @@ namespace ReactorGame.Models
         [JsonProperty("valves")]
         public Dictionary<string, ValveSettings> Valves { get; set; }
 
-        public GameSettings()
+        public GameScenario()
         {
             CycleDuration = 120;
             BreakTankOnOverflow = true;
@@ -42,7 +46,7 @@ namespace ReactorGame.Models
             Valves = new Dictionary<string, ValveSettings>();
         }
 
-        public static GameSettings LoadSettings(string fname)
+        public static GameScenario LoadSettings(string fname)
         {
             if (!File.Exists(fname))
             {
@@ -50,7 +54,7 @@ namespace ReactorGame.Models
                 return null;
             }
             string json = File.ReadAllText(fname);
-            GameSettings? gameSettings = JsonConvert.DeserializeObject<GameSettings>(json);
+            GameScenario? gameSettings = JsonConvert.DeserializeObject<GameScenario>(json);
             if (gameSettings == null)
             {
                 Console.WriteLine("Deserialization failed");
