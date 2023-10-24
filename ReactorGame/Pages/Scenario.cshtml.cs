@@ -30,7 +30,11 @@ namespace ReactorGame.Pages
 
         public IActionResult OnGet(int scenarioId)
         {
-            TryToLoadScenario(scenarioId);
+            try {
+                TryToLoadScenario(scenarioId);
+            } catch {
+                return RedirectToPage("/Settings");
+            }
 
             return Page();
         }
@@ -41,7 +45,13 @@ namespace ReactorGame.Pages
 
             if (gameSettings == null)
             {
-                return;
+                throw new Exception("Could not load game settings");
+            }
+
+            // Ensure the scenario ID is valid
+            if (scenarioId < 0 || scenarioId >= gameSettings.Scenarios.Count)
+            {
+                throw new Exception("Invalid scenario ID");
             }
 
             // Set the scenario to the first one in the list
@@ -52,10 +62,15 @@ namespace ReactorGame.Pages
 
         public IActionResult OnPost(int scenarioId)
         {
-            Console.WriteLine(Scenario.ScenarioName);
             if (!ModelState.IsValid)
             {
                 return Page();
+            }
+
+            // Ensure the scenario ID is valid
+            if (scenarioId < 0 || scenarioId >= ScenarioSet.LoadSettings(JsonFilePath).Scenarios.Count)
+            {
+                return RedirectToPage("/Settings");
             }
 
             // Set flow temperatures from the list
@@ -73,7 +88,11 @@ namespace ReactorGame.Pages
 
         public IActionResult OnGetJson(int scenarioId)
         {
-            TryToLoadScenario(scenarioId);
+            try {
+                TryToLoadScenario(scenarioId);
+            } catch {
+                return new JsonResult(new { error = "Could not load scenario" });
+            }
 
             return new JsonResult(Scenario);
         }

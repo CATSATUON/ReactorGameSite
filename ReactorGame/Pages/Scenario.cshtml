@@ -14,8 +14,8 @@
 
         <div class="form-group row">
             <div class="col-sm-8">
-                <button type="submit" class="btn btn-success">Save Scenario</button>
                 <a asp-page="/Settings" class="btn btn-secondary">Return Without Saving</a>
+                <button type="submit" class="btn btn-success">Save Scenario</button>
             </div>
         </div>
 
@@ -25,6 +25,13 @@
             <label for="scenarioName" class="col-sm-4 col-form-label text-right">Scenario Name:</label>
             <div class="col-sm-4">
                 <input type="text" id="scenarioName" name="Scenario.ScenarioName" class="form-control" value="@Model.Scenario.ScenarioName" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="totalCycles" class="col-sm-4 col-form-label text-right">Total Cycles:</label>
+            <div class="col-sm-2">
+                <input type="number" id="totalCycles" name="Scenario.TotalCycles" class="form-control" value="@Model.Scenario.TotalCycles" />
             </div>
         </div>
 

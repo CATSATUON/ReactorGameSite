@@ -4,7 +4,23 @@
     ViewData["Title"] = "Settings";
     Layout = "_Layout";
 }
-<h1>Settings Saved</h1>
-<p>Your settings have been saved.</p>
-<!--Link to scenario page-->
-<a asp-page="/Scenario" asp-route-scenarioId="0">Go to scenario 0</a>
+<h1>Game Settings</h1>
+
+<h2>Scenarios:</h2>
+
+<ul id="reorderable-list" class="list-group">
+    @for (var i = 0; i < Model.Settings.Scenarios.Count; i++)
+    {
+        <li class="list-group-item">
+            <a asp-page="/Scenario" asp-route-scenarioId="@i">
+                @Model.Settings.Scenarios[i].ScenarioName
+            </a>
+        </li>
+    }
+</ul>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/js/settingsList.js"></script>
+}

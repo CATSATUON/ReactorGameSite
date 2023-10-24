@@ -16,19 +16,27 @@ namespace ReactorGame.Pages
         public SettingsModel(ILogger<ScenarioModel> logger)
         {
             _logger = logger;
-            Settings = TryToLoadSettings();
         }
 
         public IActionResult OnGet()
         {
-            Settings = TryToLoadSettings();
+            try {
+                Settings = TryToLoadSettings();
+            } catch {
+                Settings = new ScenarioSet();
+                Settings.SaveSettings(JsonFilePath);
+            }
 
             return Page();
         }
 
         public IActionResult OnGetJson()
         {
-            Settings = TryToLoadSettings();
+            try {
+                Settings = TryToLoadSettings();
+            } catch {
+                return new JsonResult(new { error = "Could not load settings" });
+            }
 
             return new JsonResult(Settings);
         }

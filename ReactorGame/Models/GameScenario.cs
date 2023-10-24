@@ -14,6 +14,11 @@ namespace ReactorGame.Models
         [Required(ErrorMessage = "Scenario name is required")]
         public string ScenarioName { get; set; }
 
+        [JsonProperty("totalCycles")]
+        [Required(ErrorMessage = "Total cycles is required")]
+        [Range(1, 1000, ErrorMessage = "Total cycles must be 1 or greater")]
+        public int TotalCycles { get; set; }
+
         [JsonProperty("cycleDuration")]
         [Required(ErrorMessage = "Cycle duration is required")]
         [Range(1, 1000, ErrorMessage = "Cycle duration must be 1 or greater")]
