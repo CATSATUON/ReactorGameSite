@@ -38,35 +38,13 @@ namespace ReactorGame.Models
 
         public GameScenario()
         {
+            ScenarioName = "New Scenario";
             CycleDuration = 120;
             BreakTankOnOverflow = true;
             FlowTemperatures = new Dictionary<int, int>();
             Tanks = new Dictionary<string, TankSettings>();
             TargetTemperature = 100;
             Valves = new Dictionary<string, ValveSettings>();
-        }
-
-        public static GameScenario LoadSettings(string fname)
-        {
-            if (!File.Exists(fname))
-            {
-                Console.WriteLine("File does not exist");
-                return null;
-            }
-            string json = File.ReadAllText(fname);
-            GameScenario? gameSettings = JsonConvert.DeserializeObject<GameScenario>(json);
-            if (gameSettings == null)
-            {
-                Console.WriteLine("Deserialization failed");
-                return null;
-            }
-            return gameSettings;
-        }
-
-        public void SaveSettings(string fname)
-        {
-            string json = JsonConvert.SerializeObject(this, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(fname, json);
         }
     }
 

@@ -1,9 +1,10 @@
 ﻿@page
+@model ReactorGame.Pages.SettingsModel
 @{
-    ViewData["Title"] = "Settings Saved";
+    ViewData["Title"] = "Settings";
     Layout = "_Layout";
 }
 <h1>Settings Saved</h1>
 <p>Your settings have been saved.</p>
 <!--Link to scenario page-->
-<a asp-page="/Scenario">Go to scenario</a>
+<a asp-page="/Scenario" asp-route-scenarioId="0">Go to scenario 0</a>

@@ -1,13 +1,13 @@
-﻿@page
+﻿@page "/scenario/{scenarioId:int}"
 @model ScenarioModel
 @{
     ViewData["Title"] = "Scenario";
     Layout = "_Layout";
 }
 <div class="container mt-4">
-    <h1>@ViewData["Title"]: @Model.GameSettings.ScenarioName</h1>
+    <h1>@ViewData["Title"]: @Model.Scenario.ScenarioName</h1>
 
-    <form method="post" action="/Settings">
+    <form method="post" action="@Request.Path">
         @Html.AntiForgeryToken()
 
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -24,14 +24,14 @@
         <div class="form-group row">
             <label for="scenarioName" class="col-sm-4 col-form-label text-right">Scenario Name:</label>
             <div class="col-sm-4">
-                <input type="text" id="scenarioName" name="GameSettings.ScenarioName" class="form-control" value="@Model.GameSettings.ScenarioName" />
+                <input type="text" id="scenarioName" name="Scenario.ScenarioName" class="form-control" value="@Model.Scenario.ScenarioName" />
             </div>
         </div>
 
         <div class="form-group row">
             <label for="cycleDuration" class="col-sm-4 col-form-label text-right">Cycle Duration (seconds):</label>
             <div class="col-sm-2">
-                <input type="number" id="cycleDuration" name="GameSettings.CycleDuration" class="form-control" value="@Model.GameSettings.CycleDuration" />
+                <input type="number" id="cycleDuration" name="Scenario.CycleDuration" class="form-control" value="@Model.Scenario.CycleDuration" />
             </div>
         </div>
 
@@ -39,8 +39,8 @@
             <label for="breakTankOnOverflow" class="col-sm-4 col-form-label text-right">Break Tank On Overflow:</label>
             <div class="col-sm-2">
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" id="breakTankOnOverflow" name="GameSettings.BreakTankOnOverflow" value="true" class="custom-control-input" @(Model.GameSettings.BreakTankOnOverflow ? "checked" : "") />
-                    <input type="hidden" name="GameSettings.BreakTankOnOverflow" value="false" />
+                    <input type="checkbox" id="breakTankOnOverflow" name="Scenario.BreakTankOnOverflow" value="true" class="custom-control-input" @(Model.Scenario.BreakTankOnOverflow ? "checked" : "") />
+                    <input type="hidden" name="Scenario.BreakTankOnOverflow" value="false" />
                     <label class="custom-control-label" for="breakTankOnOverflow"></label>
                 </div>
             </div>
@@ -49,7 +49,7 @@
         <div class="form-group row">
             <label for="targetTemperature" class="col-sm-4 col-form-label text-right">Target Temperature (°C):</label>
             <div class="col-sm-2">
-                <input type="number" id="targetTemperature" name="GameSettings.TargetTemperature" class="form-control" value="@Model.GameSettings.TargetTemperature" />
+                <input type="number" id="targetTemperature" name="Scenario.TargetTemperature" class="form-control" value="@Model.Scenario.TargetTemperature" />
             </div>
         </div>
 
@@ -101,10 +101,10 @@
                                 Tank @(i)
                             </td>
                             <td>
-                                <input type="number" min="1" max="20" name='GameSettings.Tanks[tank@(i)].Capacity' class="form-control" value="@Model.GameSettings.Tanks["tank" + i].Capacity" placeholder="Capacity" />
+                                <input type="number" min="1" max="20" name='Scenario.Tanks[tank@(i)].Capacity' class="form-control" value="@Model.Scenario.Tanks["tank" + i].Capacity" placeholder="Capacity" />
                             </td>
                             <td>
-                                <input type="number" min="0" max="20" name='GameSettings.Tanks[tank@(i)].StartLevel' class="form-control" value="@Model.GameSettings.Tanks["tank" + i].StartLevel" placeholder="Start Level" />
+                                <input type="number" min="0" max="20" name='Scenario.Tanks[tank@(i)].StartLevel' class="form-control" value="@Model.Scenario.Tanks["tank" + i].StartLevel" placeholder="Start Level" />
                             </td>
                         </tr>
                     }
@@ -132,18 +132,18 @@
                                 Valve @(i)
                             </td>
                             <td>
-                                <input type="number" min="1" max="20" name='GameSettings.Valves[valve@(i)].MaxFlowDisplay' class="form-control" value="@Model.GameSettings.Valves["valve" + i].MaxFlowDisplay" placeholder="Max Flow Display" />
+                                <input type="number" min="1" max="20" name='Scenario.Valves[valve@(i)].MaxFlowDisplay' class="form-control" value="@Model.Scenario.Valves["valve" + i].MaxFlowDisplay" placeholder="Max Flow Display" />
                             </td>
                             <td>
-                                <input type="number" min="1" max="20" name='GameSettings.Valves[valve@(i)].FlowStepSize' class="form-control" value="@Model.GameSettings.Valves["valve" + i].FlowStepSize" placeholder="Flow Step Size" />
+                                <input type="number" min="1" max="20" name='Scenario.Valves[valve@(i)].FlowStepSize' class="form-control" value="@Model.Scenario.Valves["valve" + i].FlowStepSize" placeholder="Flow Step Size" />
                             </td>
                             <td>
-                                <input type="number" step="any" min="0" max="1" name='GameSettings.Valves[valve@(i)].FlowRatePerStep' class="form-control" value="@Model.GameSettings.Valves["valve" + i].FlowRatePerStep" placeholder="Flow Rate Per Step" />
+                                <input type="number" step="any" min="0" max="1" name='Scenario.Valves[valve@(i)].FlowRatePerStep' class="form-control" value="@Model.Scenario.Valves["valve" + i].FlowRatePerStep" placeholder="Flow Rate Per Step" />
                             </td>
                             <td>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" name='GameSettings.Valves[valve@(i)].IsBroken' value="true" class="custom-control-input" @(Model.GameSettings.Valves["valve" + i].IsBroken ? "checked" : "") />
-                                    <input type="hidden" name='GameSettings.Valves[valve@(i)].IsBroken' value="false" />
+                                    <input type="checkbox" name='Scenario.Valves[valve@(i)].IsBroken' value="true" class="custom-control-input" @(Model.Scenario.Valves["valve" + i].IsBroken ? "checked" : "") />
+                                    <input type="hidden" name='Scenario.Valves[valve@(i)].IsBroken' value="false" />
                                     <label class="custom-control-label"></label>
                                 </div>
                             </td>
