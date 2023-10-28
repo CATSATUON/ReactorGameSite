@@ -83,7 +83,7 @@ namespace ReactorGame.Pages
             // Save the settings back to the file
             gameSettings.SaveSettings(JsonFilePath);
 
-            return RedirectToPage("/Confirmation");
+            return RedirectToPage("/Settings");
         }
 
         public IActionResult OnGetJson(int scenarioId)
