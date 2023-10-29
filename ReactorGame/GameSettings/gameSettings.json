@@ -2,7 +2,7 @@
   "name": "test",
   "scenarios": [
     {
-      "scenarioName": "Normal o",
+      "scenarioName": "Normal operation",
       "totalCycles": 10,
       "cycleDuration": 25,
       "breakTankOnOverflow": true,
@@ -115,7 +115,7 @@
       }
     },
     {
-      "scenarioName": "Scenario 2",
+      "scenarioName": "Scenario with broken valves",
       "totalCycles": 12,
       "cycleDuration": 30,
       "breakTankOnOverflow": true,
