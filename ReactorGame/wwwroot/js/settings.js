@@ -9,7 +9,7 @@
 });
 
 // Function to download data to a file
-function downloadSettings() {
+$('#downloadSettingsButton').on('click', function downloadSettings() {
     $.ajax({
         url: '/settings?handler=Json',
         method: 'GET',
@@ -23,11 +23,54 @@ function downloadSettings() {
             link.click();
             document.body.removeChild(link);
         },
-        error: function(error) {
+        error: function (error) {
             console.log("Error attempting to fetch settings", error);
         }
     });
-}
+});
 
-// Connect the button to the download function
-$('#downloadSettingsButton').on('click', downloadSettings);
+// Function to upload data from a file
+$("#replaceSettingsButton").on("click", function () {
+    const fileInput = document.getElementById('uploadSettingsFile');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("Please select a file to upload first")
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const contents = event.target.result;
+        try {
+            const settings = JSON.parse(contents);
+            sendNewSettingsToServer(settings);
+        } catch (error) {
+            console.log("Error parsing settings file", error);
+            alert("Error parsing settings file: " + error.message);
+        }
+    }
+
+    reader.readAsText(file);
+});
+
+// Function to send new settings to the server
+function sendNewSettingsToServer(settings) {
+    var token = $('input[name="__RequestVerificationToken"]').val();
+
+    $.ajax({
+        url: '/settings?handler=replace',
+        method: 'POST',
+        data: JSON.stringify(settings),
+        contentType: 'application/json; charset=utf-8',
+        headers: {
+            'RequestVerificationToken': token
+        },
+        success: function () {
+            window.location.reload();
+        },
+        error: function (error) {
+            console.log("Error attempting to replace settings", error);
+            alert("Error attempting to replace settings: " + error.responseText)
+        }
+    });
+}

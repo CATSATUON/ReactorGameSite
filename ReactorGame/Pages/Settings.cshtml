@@ -19,6 +19,12 @@
         <button id="appendSettingsButton" class="btn btn-warning">Append from file</button>
     </div>
 
+    <div>
+        <form method="post" action="@Request.Path">
+            @Html.AntiForgeryToken()
+        </form>
+    </div>
+
     <h2>Scenarios:</h2>
     <ul id="reorderable-list" class="list-group mt-3">
         @for (var i = 0; i < Model.Settings.Scenarios.Count; i++)

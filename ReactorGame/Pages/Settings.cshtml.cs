@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReactorGame.Models;
@@ -20,9 +21,12 @@ namespace ReactorGame.Pages
 
         public IActionResult OnGet()
         {
-            try {
+            try
+            {
                 Settings = TryToLoadSettings();
-            } catch {
+            }
+            catch
+            {
                 Settings = new ScenarioSet();
                 Settings.SaveSettings(JsonFilePath);
             }
@@ -32,9 +36,12 @@ namespace ReactorGame.Pages
 
         public IActionResult OnGetJson()
         {
-            try {
+            try
+            {
                 Settings = TryToLoadSettings();
-            } catch {
+            }
+            catch
+            {
                 return new JsonResult(new { error = "Could not load settings" });
             }
 
@@ -44,9 +51,35 @@ namespace ReactorGame.Pages
         private ScenarioSet TryToLoadSettings()
         {
             // Load the settings from a file
-            ScenarioSet settings = ScenarioSet.LoadSettings(JsonFilePath);
+            ScenarioSet settings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
 
             return settings;
+        }
+
+        public IActionResult OnPostReplace([FromBody] ScenarioSet settings)
+        {
+            Console.WriteLine("OnPostReplace");
+
+            if (settings == null)
+            {
+                return new BadRequestObjectResult("Settings are not valid");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestObjectResult("Settings are not valid");
+            }
+
+            try
+            {
+                settings.SaveSettings(JsonFilePath);
+            }
+            catch
+            {
+                return new BadRequestObjectResult("Could not save settings");
+            }
+
+            return new OkObjectResult("Settings saved");
         }
     }
 }

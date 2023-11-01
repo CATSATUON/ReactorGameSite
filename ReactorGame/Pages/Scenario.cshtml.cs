@@ -41,7 +41,7 @@ namespace ReactorGame.Pages
 
         private void TryToLoadScenario(int scenarioId)
         {
-            ScenarioSet? gameSettings = ScenarioSet.LoadSettings(JsonFilePath);
+            ScenarioSet? gameSettings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
 
             if (gameSettings == null)
             {
@@ -68,7 +68,7 @@ namespace ReactorGame.Pages
             }
 
             // Ensure the scenario ID is valid
-            if (scenarioId < 0 || scenarioId >= ScenarioSet.LoadSettings(JsonFilePath).Scenarios.Count)
+            if (scenarioId < 0 || scenarioId >= ScenarioSet.LoadSettingsFromFile(JsonFilePath).Scenarios.Count)
             {
                 return RedirectToPage("/Settings");
             }
@@ -77,7 +77,7 @@ namespace ReactorGame.Pages
             Scenario.FlowTemperatures.Clear();
             Scenario.FlowTemperatures = FlowTemperatures.ToDictionary(x => x.Flow, x => x.Temperature);
             // Load the settings and replace the scenario
-            ScenarioSet gameSettings = ScenarioSet.LoadSettings(JsonFilePath);
+            ScenarioSet gameSettings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
             gameSettings.Scenarios[scenarioId] = Scenario;
             
             // Save the settings back to the file

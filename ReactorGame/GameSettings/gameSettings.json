@@ -1,13 +1,13 @@
 {
-  "name": "test",
+  "name": "newScenarios",
   "scenarios": [
     {
-      "scenarioName": "Normal operation",
+      "scenarioName": "Portal reloaded settings",
       "totalCycles": 10,
       "cycleDuration": 25,
       "breakTankOnOverflow": true,
       "flowTemperatures": {
-        "0": 300,
+        "0": 333,
         "1": 250,
         "2": 200,
         "3": 160,

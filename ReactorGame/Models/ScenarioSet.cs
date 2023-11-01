@@ -20,7 +20,7 @@ namespace ReactorGame.Models
             Name = "New Settings";
         }
 
-        public static ScenarioSet LoadSettings(string fname)
+        public static ScenarioSet LoadSettingsFromFile(string fname)
         {
             if (!File.Exists(fname))
             {
@@ -28,6 +28,11 @@ namespace ReactorGame.Models
                 throw new FileNotFoundException();
             }
             string json = File.ReadAllText(fname);
+            return LoadSettingsFromJson(json);
+        }
+
+        public static ScenarioSet LoadSettingsFromJson(string json)
+        {
             ScenarioSet? gameSettings = JsonConvert.DeserializeObject<ScenarioSet>(json);
             if (gameSettings == null)
             {
@@ -35,7 +40,7 @@ namespace ReactorGame.Models
                 throw new JsonSerializationException();
             }
             return gameSettings;
-        }
+        }   
 
         public void SaveSettings(string fname)
         {
