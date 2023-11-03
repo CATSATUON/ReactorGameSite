@@ -58,8 +58,6 @@ namespace ReactorGame.Pages
 
         public IActionResult OnPostReplace([FromBody] ScenarioSet settings)
         {
-            Console.WriteLine("OnPostReplace");
-
             if (settings == null)
             {
                 return new BadRequestObjectResult("Settings are not valid");
