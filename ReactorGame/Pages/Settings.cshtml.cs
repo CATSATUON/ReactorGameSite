@@ -79,5 +79,75 @@ namespace ReactorGame.Pages
 
             return new OkObjectResult("Settings saved");
         }
+
+        public IActionResult OnPostAppend([FromBody] ScenarioSet settings)
+        {
+            if (settings == null)
+            {
+                return new BadRequestObjectResult("Settings are not valid");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestObjectResult("Settings are not valid");
+            }
+
+            try
+            {
+                ScenarioSet currentSettings = TryToLoadSettings();
+                currentSettings.Append(settings);
+                currentSettings.SaveSettings(JsonFilePath);
+                Settings = currentSettings;
+            }
+            catch
+            {
+                return new BadRequestObjectResult("Could not save settings");
+            }
+
+            return new OkObjectResult("Settings saved");
+        }
+
+        public IActionResult OnPostCreateScenario()
+        {
+            // Add a new empty scenario to the settings
+            try
+            {
+                ScenarioSet currentSettings = TryToLoadSettings();
+                currentSettings.Scenarios.Add(new GameScenario());
+                currentSettings.SaveSettings(JsonFilePath);
+                Settings = currentSettings;
+            }
+            catch
+            {
+                return new BadRequestObjectResult("Could not save settings");
+            }
+
+            return new OkObjectResult("Scenario created");
+        }
+
+        public IActionResult OnPostDeleteScenario(int scenarioId)
+        {
+            Console.WriteLine($"Deleting scenario {scenarioId}");
+            // Check if the scenario exists
+            try
+            {
+                ScenarioSet currentSettings = TryToLoadSettings();
+                if (scenarioId < 0 || scenarioId >= currentSettings.Scenarios.Count)
+                {
+                    return new BadRequestObjectResult("Scenario does not exist");
+                }
+
+                // Remove the scenario
+                currentSettings.Scenarios.RemoveAt(scenarioId);
+                currentSettings.SaveSettings(JsonFilePath);
+                Settings = currentSettings;
+            }
+            catch
+            {
+                return new BadRequestObjectResult("Could not save settings");
+            }
+
+            return new OkObjectResult("Scenario deleted");
+        }
     }
 }

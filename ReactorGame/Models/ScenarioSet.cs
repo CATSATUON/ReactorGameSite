@@ -47,5 +47,13 @@ namespace ReactorGame.Models
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(fname, json);
         }
+
+        public void Append(ScenarioSet otherScenarios)
+        {
+            for (int i = 0; i < otherScenarios.Scenarios.Count; i++)
+            {
+                Scenarios.Add(otherScenarios.Scenarios[i]);
+            }
+        }
     }
 }

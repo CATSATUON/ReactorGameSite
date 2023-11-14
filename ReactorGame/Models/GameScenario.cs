@@ -6,10 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ReactorGame.Models
 {
-
     [Serializable]
     public class GameScenario
     {
+        private const int TankCount = 4;
+        private const int ValveCount = 13;
+
         [JsonProperty("scenarioName")]
         [Required(ErrorMessage = "Scenario name is required")]
         public string ScenarioName { get; set; }
@@ -44,12 +46,29 @@ namespace ReactorGame.Models
         public GameScenario()
         {
             ScenarioName = "New Scenario";
-            CycleDuration = 120;
+            TargetTemperature = 120;
+            CycleDuration = 25;
+            TotalCycles = 10;
             BreakTankOnOverflow = true;
             FlowTemperatures = new Dictionary<int, int>();
             Tanks = new Dictionary<string, TankSettings>();
-            TargetTemperature = 100;
             Valves = new Dictionary<string, ValveSettings>();
+
+            // Add the required tanks
+            for (int i = 1; i <= TankCount; i++)
+            {
+                Tanks.Add($"tank{i}", new TankSettings());
+            }
+
+            // Add the required valves
+            for (int i = 1; i <= ValveCount; i++)
+            {
+                Valves.Add($"valve{i}", new ValveSettings());
+            }
+
+            // Add some flow temperatures
+            FlowTemperatures.Add(0, 200);
+            FlowTemperatures.Add(4, 100);
         }
     }
 
@@ -65,6 +84,12 @@ namespace ReactorGame.Models
         [Required(ErrorMessage = "Start level is required")]
         [Range(0, 20, ErrorMessage = "Start level must be between 0 and 20")]
         public int StartLevel { get; set; }
+
+        public TankSettings()
+        {
+            Capacity = 3;
+            StartLevel = 0;
+        }
     }
 
     [Serializable]
@@ -87,5 +112,13 @@ namespace ReactorGame.Models
         
         [JsonProperty("isBroken")]
         public bool IsBroken { get; set; }
+
+        public ValveSettings()
+        {
+            MaxFlowDisplay = 2;
+            FlowStepSize = 1;
+            FlowRatePerStep = 1f;
+            IsBroken = false;
+        }
     }
 }
