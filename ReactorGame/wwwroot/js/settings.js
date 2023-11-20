@@ -1,12 +1,33 @@
 ﻿$(function () {
     $("#reorderable-list").sortable({
         update: function (event, ui) {
-            var updatedOrder = $("#reorderable-list").sortable("toArray");
-            // TODO: update the order
+            var updatedOrder = $("#reorderable-list").find('li').map(function () {
+                return $(this).data('scenarioname');
+            }).get();
+            updateScenarioOrder(updatedOrder);
         }
     });
     $("#reorderable-list").disableSelection();
 });
+
+function updateScenarioOrder(order) {
+    var token = $('input[name="__RequestVerificationToken"]').val();
+    $.ajax({
+        url: '/settings?handler=updateOrder',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ scenarioNames: order }),
+        headers: {
+            'RequestVerificationToken': token
+        },
+        success: function (response) {
+            console.log("Order updated successfully");
+        },
+        error: function (error) {
+            console.error("Error updating order", error);
+        }
+    });
+}
 
 // Function to download data to a file
 $('#downloadSettingsButton').on('click', function downloadSettings() {

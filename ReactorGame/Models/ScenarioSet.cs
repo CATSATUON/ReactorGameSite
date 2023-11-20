@@ -44,9 +44,38 @@ namespace ReactorGame.Models
 
         public void SaveSettings(string fname)
         {
+            EnsureUniqueNames();
+
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(fname, json);
         }
+
+        public void EnsureUniqueNames()
+        {
+            var nameCounts = new Dictionary<string, int>();
+
+            foreach (var scenario in Scenarios)
+            {
+                string originalName = scenario.ScenarioName;
+                while (nameCounts.ContainsKey(scenario.ScenarioName))
+                {
+                    nameCounts[originalName]++;
+                    scenario.ScenarioName = originalName + $" ({nameCounts[originalName]})";
+                }
+
+                if (!nameCounts.ContainsKey(originalName))
+                {
+                    nameCounts[originalName] = 0;
+                }
+
+                if (!nameCounts.ContainsKey(scenario.ScenarioName))
+                {
+                    nameCounts[scenario.ScenarioName] = 0;
+                }
+            }
+        }
+
+
 
         public void Append(ScenarioSet otherScenarios)
         {

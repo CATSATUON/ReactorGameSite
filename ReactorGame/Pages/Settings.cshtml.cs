@@ -113,7 +113,12 @@ namespace ReactorGame.Pages
             try
             {
                 ScenarioSet currentSettings = TryToLoadSettings();
-                currentSettings.Scenarios.Add(new GameScenario());
+                GameScenario newScenario = new GameScenario();
+                // Give the scenario a unique name if it already exits
+                int scenarioCount = currentSettings.Scenarios.Count;
+                newScenario.ScenarioName = $"Scenario {scenarioCount + 1}";
+
+                currentSettings.Scenarios.Add(newScenario);
                 currentSettings.SaveSettings(JsonFilePath);
                 Settings = currentSettings;
             }
@@ -148,6 +153,49 @@ namespace ReactorGame.Pages
             }
 
             return new OkObjectResult("Scenario deleted");
+        }
+
+        public class ScenarioOrder
+        {
+            public List<string> ScenarioNames { get; set; }
+        }
+
+        public IActionResult OnPostUpdateOrder([FromBody] ScenarioOrder model)
+        {
+            if (model == null || model.ScenarioNames == null || !model.ScenarioNames.Any())
+            {
+                return new BadRequestObjectResult("No scenario names provided");
+            }
+
+            List<String> scenarioNames = model.ScenarioNames;
+
+            try
+            {
+                ScenarioSet currentSettings = TryToLoadSettings();
+
+                // Ensure that scenario names contains every scenario name
+
+                var reorderedScenarios = new List<GameScenario>();
+
+                foreach (var name in scenarioNames)
+                {
+                    var scenario = currentSettings.Scenarios.FirstOrDefault(s => s.ScenarioName == name);
+                    if (scenario == null)
+                    {
+                        return new BadRequestObjectResult($"Scenario {name} does not exist");
+                    }
+                    reorderedScenarios.Add(scenario);
+                }
+
+                currentSettings.Scenarios = reorderedScenarios;
+                currentSettings.SaveSettings(JsonFilePath);
+            }
+            catch
+            {
+                return new BadRequestObjectResult("Could not save settings");
+            }
+
+            return new JsonResult(new { success = true });
         }
     }
 }
