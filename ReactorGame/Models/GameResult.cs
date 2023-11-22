@@ -17,11 +17,11 @@ namespace ReactorGame.Models
         [JsonProperty("endTimestamp")]
         public string EndTimestamp { get; set; }
 
-        [JsonProperty("results")]
-        public List<ScenarioResult> ResultList { get; set; }
-
         [JsonProperty("csvHeaders")]
         public string CsvHeaders { get; set; }
+
+        [JsonProperty("results")]
+        public List<ScenarioResult> ResultList { get; set; }
 
         public GameResult()
         {

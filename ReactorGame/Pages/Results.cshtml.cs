@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReactorGame.Models;
@@ -6,11 +5,13 @@ using Newtonsoft.Json;
 
 namespace ReactorGame.Pages
 {
+    [IgnoreAntiforgeryToken]
     public class ResultsModel : PageModel
     {
         public async Task<IActionResult> OnPostAsync()
         {
             Console.Out.WriteLine("Received POST request to /Results");
+
             using StreamReader reader = new StreamReader(Request.Body);
             string body = await reader.ReadToEndAsync();
 

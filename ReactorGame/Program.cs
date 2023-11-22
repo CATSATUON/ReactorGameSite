@@ -58,6 +58,11 @@ contentTypeProvider.Mappings[".data"] = "application/octet-stream";
 contentTypeProvider.Mappings[".js"] = "application/javascript";
 staticFileOptions.ContentTypeProvider = contentTypeProvider;
 
+// TODO: Remove this in production
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseStaticFiles(staticFileOptions);
 
