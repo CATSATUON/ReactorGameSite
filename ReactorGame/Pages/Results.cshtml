@@ -5,3 +5,28 @@
     Layout = "_Layout";
 }
 
+<h1>Results</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary mb-3" href="@Url.Page("Results", "Zip")">
+            <i class="fa fa-download"></i> Download All
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form method="post" asp-page-handler="DeleteAll" onsubmit="return confirmDelete();">
+            <button type="submit" class="btn btn-danger">
+                <i class="fa fa-trash"></i> Delete All
+            </button>
+            <small class="text-muted d-block mt-2">
+                Warning: This will permanently delete all results. Download first if you wish to keep them.
+            </small>
+        </form>
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete all results data? This action cannot be undone.');
+    }
+</script>

@@ -7,21 +7,27 @@ namespace ReactorGame.Models
     public class ScenarioResult
     {
         [JsonProperty("records")]
-        private List<CycleResult> _records;
+        public List<CycleResult> Records;
+
+        [JsonProperty("scenarioName")]
+        public string ScenarioName;
 
         public ScenarioResult()
         {
-            _records = new List<CycleResult>();
+            Records = new List<CycleResult>();
+            ScenarioName = "Default";
+
         }
 
-        public ScenarioResult(List<CycleResult> records)
+        public ScenarioResult(List<CycleResult> records, string name)
         {
-            _records = records;
+            Records = records;
+            ScenarioName = name;
         }
 
         public void AddRecord(CycleResult record)
         {
-            _records.Add(record);
+            Records.Add(record);
         }
 
         public string ToCSV()
@@ -30,7 +36,7 @@ namespace ReactorGame.Models
 
             // Write the header
             sb.AppendLine(CycleResult.GetHeader());
-            foreach (CycleResult record in _records)
+            foreach (CycleResult record in Records)
             {
                 sb.AppendLine(record.ToCSV());
             }
