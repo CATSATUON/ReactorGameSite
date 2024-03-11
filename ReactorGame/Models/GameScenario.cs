@@ -29,6 +29,9 @@ namespace ReactorGame.Models
         [JsonProperty("breakTankOnOverflow")]
         public bool BreakTankOnOverflow { get; set; }
 
+        [JsonProperty("showOverflowWarning")]
+        public bool ShowOverflowWarning { get; set; }
+
         [JsonProperty("flowTemperatures")]
         public Dictionary<int, int> FlowTemperatures { get; set; }
 
@@ -50,6 +53,7 @@ namespace ReactorGame.Models
             CycleDuration = 25;
             TotalCycles = 10;
             BreakTankOnOverflow = true;
+            ShowOverflowWarning = true;
             FlowTemperatures = new Dictionary<int, int>();
             Tanks = new Dictionary<string, TankSettings>();
             Valves = new Dictionary<string, ValveSettings>();

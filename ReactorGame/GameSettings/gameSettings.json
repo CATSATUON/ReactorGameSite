@@ -6,6 +6,7 @@
       "totalCycles": 20,
       "cycleDuration": 20,
       "breakTankOnOverflow": true,
+      "showOverflowWarning": true,
       "flowTemperatures": {
         "0": 300,
         "4": 120,

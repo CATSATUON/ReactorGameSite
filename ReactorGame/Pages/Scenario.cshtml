@@ -54,6 +54,16 @@
         </div>
 
         <div class="form-group row">
+            <label for="showOverflowWarning" class="col-sm-4 col-form-label text-right">Display overflow warning light:</label>
+            <div class="col-sm-2">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" id="showOverflowWarning" name="Scenario.ShowOverflowWarning" value="true" class="custom-control-input" @(Model.Scenario.ShowOverflowWarning ? "checked" : "") />
+                    <input type="hidden" name="Scenario.ShowOverflowWarning" value="false" />
+                    <label class="custom-control-label" for="ShowOverflowWarning"></label>
+                </div>
+            </div>
+
+        <div class="form-group row">
             <label for="targetTemperature" class="col-sm-4 col-form-label text-right">Target Temperature (°C):</label>
             <div class="col-sm-2">
                 <input type="number" id="targetTemperature" name="Scenario.TargetTemperature" class="form-control" value="@Model.Scenario.TargetTemperature" />
