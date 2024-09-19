@@ -17,6 +17,9 @@ namespace ReactorGame.Models
         [JsonProperty("endTimestamp")]
         public string EndTimestamp { get; set; }
 
+        [JsonProperty("completionCode")]
+        public string CompletionCode { get; set; }
+
         [JsonProperty("csvHeaders")]
         public string CsvHeaders { get; set; }
 
@@ -26,9 +29,11 @@ namespace ReactorGame.Models
         public GameResult()
         {
             GameName = "Default";
+            VideoShown = "Default";
             CsvHeaders = CycleResult.GetHeader();
             StartTimestamp = DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm:ss");
             EndTimestamp = DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm:ss");
+            CompletionCode = "100000";
             ResultList = new List<ScenarioResult>();
         }
     }

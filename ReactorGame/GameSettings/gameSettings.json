@@ -1,36 +1,32 @@
 {
-  "name": "newScenarios",
+  "name": "New Settings",
   "scenarios": [
     {
-      "scenarioName": "Scenario",
-      "totalCycles": 20,
-      "cycleDuration": 20,
+      "scenarioName": "Scenario 1",
+      "totalCycles": 10,
+      "cycleDuration": 25,
       "breakTankOnOverflow": true,
       "showOverflowWarning": true,
       "flowTemperatures": {
-        "0": 300,
-        "4": 120,
-        "1": 250,
-        "2": 200,
-        "3": 160,
-        "5": 100
+        "0": 200,
+        "4": 100
       },
       "tanks": {
         "tank1": {
-          "capacity": 2,
-          "startLevel": 1
+          "capacity": 3,
+          "startLevel": 0
         },
         "tank2": {
-          "capacity": 4,
-          "startLevel": 3
+          "capacity": 3,
+          "startLevel": 0
         },
         "tank3": {
-          "capacity": 6,
-          "startLevel": 3
+          "capacity": 3,
+          "startLevel": 0
         },
         "tank4": {
-          "capacity": 8,
-          "startLevel": 3
+          "capacity": 3,
+          "startLevel": 0
         }
       },
       "targetTemperature": 120,
@@ -43,19 +39,19 @@
         },
         "valve2": {
           "maxFlowDisplay": 2,
-          "flowStepSize": 2,
+          "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         },
         "valve3": {
           "maxFlowDisplay": 2,
-          "flowStepSize": 2,
+          "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         },
         "valve4": {
           "maxFlowDisplay": 2,
-          "flowStepSize": 2,
+          "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         },
@@ -90,30 +86,35 @@
           "isBroken": false
         },
         "valve10": {
-          "maxFlowDisplay": 4,
+          "maxFlowDisplay": 2,
           "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         },
         "valve11": {
-          "maxFlowDisplay": 4,
+          "maxFlowDisplay": 2,
           "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         },
         "valve12": {
-          "maxFlowDisplay": 4,
+          "maxFlowDisplay": 2,
           "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         },
         "valve13": {
-          "maxFlowDisplay": 4,
+          "maxFlowDisplay": 2,
           "flowStepSize": 1,
           "flowRatePerStep": 1.0,
           "isBroken": false
         }
       }
     }
+  ],
+  "videoUrls": [
+    "https://reactorgame.azurewebsites.net/video/GoogleMinesweeperEasy1Second.mp4",
+    "https://reactorgame.azurewebsites.net/video/Intro.mp4",
+    "https://reactorgame.azurewebsites.net/video/Untitled.mp4"
   ]
 }

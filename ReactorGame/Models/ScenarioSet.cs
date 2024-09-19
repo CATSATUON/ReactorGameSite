@@ -14,9 +14,14 @@ namespace ReactorGame.Models
         [JsonProperty("scenarios")]
         public List<GameScenario> Scenarios { get; set; }
 
+        [Required]
+        [JsonProperty("videoUrls")]
+        public List<string> VideoUrls { get; set; }
+
         public ScenarioSet()
         {
             Scenarios = new List<GameScenario>();
+            VideoUrls = new List<string>();
             Name = "New Settings";
         }
 
@@ -74,8 +79,6 @@ namespace ReactorGame.Models
                 }
             }
         }
-
-
 
         public void Append(ScenarioSet otherScenarios)
         {

@@ -47,6 +47,7 @@ namespace ReactorGame.Pages
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Game name:, " + result.GameName);
+            sb.AppendLine("Completion code:, " + result.CompletionCode);
             sb.AppendLine("Video shown:, " + result.VideoShown);
             sb.AppendLine("Start timestamp:, " + result.StartTimestamp);
             sb.AppendLine("End timestamp:, " + result.EndTimestamp);

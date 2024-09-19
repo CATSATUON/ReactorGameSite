@@ -1,0 +1,60 @@
+﻿@page
+@model ReactorGame.Pages.VideoModel
+@{
+    ViewData["Title"] = "Videos";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Videos</h1>
+
+    @* Information *@
+    <p class="text-muted">The video shown in the game will be selected at random from this list.</p>
+
+    @* Display error messages if any *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Error"]
+        </div>
+    }
+
+    @* Video upload form *@
+    <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
+        <div class="mb-3">
+            <label for="fileUpload" class="form-label">Upload a video file:</label>
+            <input type="file" class="form-control" name="file" accept="video/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+
+    <hr class="my-4" />
+
+    @* Display uploaded videos *@
+    @if (Model.VideoFiles.Count == 0)
+    {
+        <p class="text-muted">No videos found.</p>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach (var file in Model.VideoFiles)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <video class="card-img-top" width="100%" height="auto" controls>
+                            <source src="@Url.Content("~/video/" + file)" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="card-body">
+                            <p class="card-text">@file</p>
+                            <form method="post" asp-page-handler="Delete" asp-route-file="@file" onsubmit="return confirm('Are you sure you want to delete this video?');">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
