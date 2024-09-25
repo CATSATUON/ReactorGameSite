@@ -62,9 +62,6 @@ namespace ReactorGame.Pages
                 await file.CopyToAsync(stream);
             }
 
-            // Reload the videos
-            LoadVideos();
-
             // Set the videourls in the scenario set
             SaveVideos();
 
@@ -89,12 +86,19 @@ namespace ReactorGame.Pages
                 TempData["Error"] = "Video not found.";
             }
 
+            // Reload and save the videos
+            SaveVideos();
+
             // Redirect to the GET handler to refresh the video list
             return RedirectToPage();
         }
 
         private void SaveVideos()
         {
+            // Load videos to ensure the list is up to date
+            LoadVideos();
+
+            // Save the video files to the scenario set
             ScenarioSet settings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
             settings.VideoUrls = VideoFiles.Select(f => VideoAbsolutePath + f).ToList();
             settings.SaveSettings(JsonFilePath);
