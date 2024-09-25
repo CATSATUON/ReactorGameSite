@@ -18,6 +18,10 @@ namespace ReactorGame.Models
         [JsonProperty("videoUrls")]
         public List<string> VideoUrls { get; set; }
 
+        [Required]
+        [JsonProperty("allowVideoSkipping")]
+        public bool AllowVideoSkipping { get; set; }
+
         public ScenarioSet()
         {
             Scenarios = new List<GameScenario>();

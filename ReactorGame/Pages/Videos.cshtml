@@ -19,6 +19,16 @@
         </div>
     }
 
+    @* Toggle for allowing video skipping *@
+    <form method="post">
+        <input class="form-check-input" type="checkbox" name="allowSkip" id="allowSkip" @(Model.AllowVideoSkipping ? "checked=\"checked\"" : "") />
+        <label class="form-check-label" for="allowSkip">
+            Allow skipping video
+        </label>
+    </form>
+
+    <hr class="my-4" />
+
     @* Video upload form *@
     <form method="post" enctype="multipart/form-data" asp-page-handler="Upload">
         <div class="mb-3">
@@ -58,3 +68,11 @@
         </div>
     }
 </div>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <script src="~/js/videos.js" asp-append-version="true"></script>
+}

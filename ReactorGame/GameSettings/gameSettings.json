@@ -116,5 +116,6 @@
     "https://reactorgame.azurewebsites.net/video/GoogleMinesweeperEasy1Second.mp4",
     "https://reactorgame.azurewebsites.net/video/Intro.mp4",
     "https://reactorgame.azurewebsites.net/video/Untitled.mp4"
-  ]
+  ],
+  "allowVideoSkipping": true
 }

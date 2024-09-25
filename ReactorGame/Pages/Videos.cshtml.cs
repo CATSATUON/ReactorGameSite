@@ -8,6 +8,8 @@ namespace ReactorGame.Pages
     {
         public List<string> VideoFiles { get; set; } = new List<string>();
 
+        public bool AllowVideoSkipping { get; set; }
+
         private const string JsonFilePath = "GameSettings/gameSettings.json";
 
         private const string VideoDirectory = "wwwroot/video";
@@ -93,10 +95,25 @@ namespace ReactorGame.Pages
 
         private void SaveVideos()
         {
-            Console.WriteLine($"Save videos");
             ScenarioSet settings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
             settings.VideoUrls = VideoFiles.Select(f => VideoAbsolutePath + f).ToList();
             settings.SaveSettings(JsonFilePath);
+        }
+
+        public IActionResult OnPostToggleSkip([FromBody] CheckboxInput input)
+        {
+            bool skipVideoAllowed = input.AllowSkip;
+
+            ScenarioSet settings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
+            settings.AllowVideoSkipping = skipVideoAllowed;
+            settings.SaveSettings(JsonFilePath);
+
+            return new JsonResult(new { success = true, allowSkip = skipVideoAllowed });
+        }
+
+        public class CheckboxInput
+        {
+            public bool AllowSkip { get; set; }
         }
     }
 }
