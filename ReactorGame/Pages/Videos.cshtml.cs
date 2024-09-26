@@ -19,6 +19,10 @@ namespace ReactorGame.Pages
         public void OnGet()
         {
             LoadVideos();
+
+            // Get allow skipping setting
+            ScenarioSet settings = ScenarioSet.LoadSettingsFromFile(JsonFilePath);
+            AllowVideoSkipping = settings.AllowVideoSkipping;
         }
 
         public void LoadVideos()

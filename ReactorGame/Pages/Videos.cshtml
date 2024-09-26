@@ -21,7 +21,7 @@
 
     @* Toggle for allowing video skipping *@
     <form method="post">
-        <input class="form-check-input" type="checkbox" name="allowSkip" id="allowSkip" @(Model.AllowVideoSkipping ? "checked=\"checked\"" : "") />
+        <input class="form-check-input" type="checkbox" name="allowSkip" id="allowSkip" @(Model.AllowVideoSkipping ? "checked" : null) />
         <label class="form-check-label" for="allowSkip">
             Allow skipping video
         </label>
