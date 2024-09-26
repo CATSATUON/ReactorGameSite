@@ -1,0 +1,36 @@
+﻿@page
+@model ReactorGame.Pages.CodesModel
+@{
+    ViewData["Title"] = "Codes";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Completion Codes</h1>
+
+    @* Information *@
+    <p class="text-muted">The code recieved upon game completion will be selected at random from this list and removed.
+        Enter codes in the field below, seperated by commas.
+    </p>
+
+    @* Display error messages if any *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Error"]
+        </div>
+    }
+
+    @* Code text form *@
+    <form method="post" enctype="multipart/form-data" asp-page-handler="UploadCodes">
+        <div class="form-group">
+            <label for="codesTextArea">Completion Codes:</label>
+            <textarea id="codesTextArea" name="codes" class="form-control" rows="15" placeholder="Enter multiple codes here, seperated by commas.">@string.Join(", ", Model.Codes)</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit Codes</button>
+    </form>
+</div>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+</form>
