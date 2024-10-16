@@ -5,6 +5,9 @@ namespace ReactorGame.Models
     [Serializable]
     public class GameResult
     {
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+        
         [JsonProperty("gameName")]
         public string GameName { get; set; }
 
@@ -28,6 +31,7 @@ namespace ReactorGame.Models
 
         public GameResult()
         {
+            UserId = "No ID";
             GameName = "Default";
             VideoShown = "Default";
             CsvHeaders = CycleResult.GetHeader();

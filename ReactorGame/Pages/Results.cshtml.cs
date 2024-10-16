@@ -46,6 +46,7 @@ namespace ReactorGame.Pages
         private static string ResultToCSV(GameResult result)
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine("User ID:, " + result.UserId);
             sb.AppendLine("Game name:, " + result.GameName);
             sb.AppendLine("Completion code:, " + result.CompletionCode);
             sb.AppendLine("Video shown:, " + result.VideoShown);
