@@ -55,4 +55,4 @@ jobs:
           app-name: 'reactorcoolinggame'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_77F51C3E9D914410801E79341EC01EC4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4688364E85694A89AEC0112B3889FE7D }}
